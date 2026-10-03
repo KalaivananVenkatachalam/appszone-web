@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AppsZone — Useful apps. Thoughtfully designed.</title>
+  <meta name="description" content="Free Android apps and useful websites built around real problems.">
+  <meta name="theme-color" content="#FAFAF8">
+  <meta property="og:title" content="AppsZone — Useful apps. Thoughtfully designed.">
+  <meta property="og:description" content="Free Android apps and useful websites built around real problems.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fff'/%3E%3Crect x='5' y='5' width='10' height='10' rx='3' fill='%23111'/%3E%3Crect x='17' y='5' width='10' height='10' rx='3' fill='%23111'/%3E%3Crect x='5' y='17' width='10' height='10' rx='3' fill='%23111'/%3E%3Ccircle cx='22' cy='22' r='5' fill='%236C5CE7'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+  <!-- Bump ?v= when CSS/JS change so browsers fetch the new files instead of a cached copy -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=2">
+  <link rel="stylesheet" href="assets/css/home.css?v=2">
+  <script>
+    // Scroll-linked motion only when the visitor hasn't asked for reduced motion.
+    document.documentElement.classList.add("js");
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("motion");
+  </script>
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Navigation: transparent at the top, compact once scrolling -->
+  <header class="site-header" data-header>
+    <div class="container nav">
+      <a class="logo" href="#top" aria-label="AppsZone home">
+        <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="2" width="9" height="9" rx="2.6" fill="currentColor"/>
+          <rect x="13" y="2" width="9" height="9" rx="2.6" fill="currentColor"/>
+          <rect x="2" y="13" width="9" height="9" rx="2.6" fill="currentColor"/>
+          <circle cx="17.5" cy="17.5" r="4.5" fill="var(--accent)"/>
+        </svg>
+        <span>AppsZone</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#more" data-filter-link="apps">Apps</a>
+        <a href="#more" data-filter-link="websites">Websites</a>
+        <a href="#person">About</a>
+      </nav>
+
+      <a class="btn btn-primary btn-sm nav-cta" href="#collection">
+        Explore AppsZone
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" hidden data-menu>
+      <nav class="container" aria-label="Mobile">
+        <a href="#more" data-filter-link="apps">Apps</a>
+        <a href="#more" data-filter-link="websites">Websites</a>
+        <a href="#thinking">How I work</a>
+        <a href="#person">About</a>
+        <a class="btn btn-primary btn-lg" href="#collection">
+          Explore AppsZone
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 01 · Hero: the headline steps back and the products take the stage -->
+    <section class="hero" id="top" data-progress="pin" aria-labelledby="hero-title">
+      <div class="hero-sticky">
+        <div class="container hero-copy">
+          <p class="eyebrow hero-eyebrow rise" style="--i:0"><span class="hero-dot" aria-hidden="true"></span>Free products</p>
+          <h1 class="hero-title rise" style="--i:1" id="hero-title">Useful apps.<br><span class="grad">Thoughtfully designed.</span></h1>
+          <p class="hero-lead rise" style="--i:2">Free Android apps and useful websites built around real problems.</p>
+          <div class="hero-ctas rise" style="--i:3">
+            <a class="btn btn-primary btn-lg" href="#collection">
+              Explore AppsZone
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="hero-link" href="#more">See what I've built</a>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-label="A selection of AppsZone products" role="group">
+          <div class="hs-item hs-far-l" data-device="free-compressor"></div>
+          <div class="hs-item hs-far-r" data-device="html-to-figma"></div>
+          <div class="hs-item hs-l" data-device="quiet-timer"></div>
+          <div class="hs-item hs-r" data-device="qc-convert"></div>
+          <div class="hs-item hs-c" data-device="receipt-keeper"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · The collection: a loose composition that settles into cards -->
+    <section class="collection" id="collection" aria-labelledby="collection-title">
+      <div class="container">
+        <header class="chapter-head reveal">
+          <p class="eyebrow">The collection</p>
+          <h2 class="display" id="collection-title">Small products.<br><span>Real problems.</span></h2>
+          <p class="chapter-lead">AppsZone is a growing collection of apps, websites and experiments built to make everyday digital tasks simpler.</p>
+        </header>
+        <div class="col-grid" data-collection data-progress="view" data-start="1" data-end="0.3"></div>
+      </div>
+    </section>
+
+    <!-- 03 + 04 · Flagship product chapter -->
+    <div class="chapter chapter--warm" data-story-chapter>
+      <section class="ft" id="receipt-keeper" data-progress="pin" aria-labelledby="ft-title">
+        <div class="ft-sticky">
+          <div class="container ft-inner">
+            <div class="ft-intro">
+              <p class="eyebrow">Android app</p>
+              <h2 class="display" id="ft-title">Your receipts.<br><span>Finally organized.</span></h2>
+              <p class="chapter-lead">Keep receipts, purchase information and important dates in one simple place.</p>
+            </div>
+
+            <div class="ft-phone">
+              <div class="ft-screen ft-screen--a" data-device="receipt-keeper"></div>
+              <div class="ft-screen ft-screen--b" data-device="rk-detail" aria-hidden="true"></div>
+            </div>
+
+            <div class="ft-features">
+              <h3 class="ft-features-title">Everything important,<br>in one place.</h3>
+              <ul class="ft-list">
+                <li style="--o:.40"><span class="ft-ico" data-glyph="receipt"></span><span><b>Save receipts</b>Snap a paper receipt or pick a photo.</span></li>
+                <li style="--o:.44"><span class="ft-ico" data-glyph="calendar"></span><span><b>Track expiry dates</b>Return windows and warranties, always visible.</span></li>
+                <li style="--o:.48"><span class="ft-ico" data-glyph="search"></span><span><b>Find purchases quickly</b>Search by store, item or date.</span></li>
+              </ul>
+              <div class="ft-cta">
+                <a class="btn btn-primary btn-lg" href="app.html?slug=receipt-keeper">
+                  Explore Receipt Keeper
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <span class="ft-meta" data-rk-meta></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story" id="story" aria-label="Receipt Keeper features">
+        <div class="container story-grid" data-story>
+          <div class="story-steps">
+            <article class="story-step" data-step="0">
+              <p class="eyebrow story-label"><span>01</span>Save</p>
+              <h3 class="story-title">Save everything.</h3>
+              <p class="story-text">Keep your important purchase information in one place.</p>
+              <div class="story-inline" data-device="rk-capture"></div>
+            </article>
+            <article class="story-step" data-step="1">
+              <p class="eyebrow story-label"><span>02</span>Find</p>
+              <h3 class="story-title">Find anything.</h3>
+              <p class="story-text">Quickly access the details you need.</p>
+              <div class="story-inline" data-device="rk-search"></div>
+            </article>
+            <article class="story-step" data-step="2">
+              <p class="eyebrow story-label"><span>03</span>Remember</p>
+              <h3 class="story-title">Remember what matters.</h3>
+              <p class="story-text">Keep expiry and return information visible when it matters.</p>
+              <div class="story-inline" data-device="rk-reminder"></div>
+            </article>
+            <div class="story-end">
+              <a class="btn btn-primary btn-lg" href="app.html?slug=receipt-keeper">
+                Explore Receipt Keeper
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="story-visual" aria-hidden="true">
+            <div class="story-screen is-active" data-screen="0" data-device="rk-capture"></div>
+            <div class="story-screen" data-screen="1" data-device="rk-search"></div>
+            <div class="story-screen" data-screen="2" data-device="rk-reminder"></div>
+            <ol class="story-dots"><li class="is-active"></li><li></li><li></li></ol>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 05 · More from AppsZone: a horizontal product rail -->
+    <section class="more" id="more" aria-labelledby="more-title">
+      <div class="container more-head reveal">
+        <div>
+          <p class="eyebrow">More from AppsZone</p>
+          <h2 class="display" id="more-title">More useful things.</h2>
+        </div>
+        <div class="more-controls">
+          <div class="seg" role="group" aria-label="Show" data-seg>
+            <button type="button" aria-pressed="true" data-filter="all">All</button>
+            <button type="button" aria-pressed="false" data-filter="apps">Apps</button>
+            <button type="button" aria-pressed="false" data-filter="websites">Websites</button>
+          </div>
+          <div class="rail-arrows">
+            <button type="button" class="rail-btn" data-rail-prev aria-label="Previous products">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="rail-btn" data-rail-next aria-label="Next products">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="rail" data-rail tabindex="0" aria-label="Products"></div>
+      <p class="sr-only" aria-live="polite" data-rail-status></p>
+    </section>
+
+    <!-- 06 · Apps vs websites -->
+    <section class="split" id="apps-and-websites" data-split aria-labelledby="split-title">
+      <div class="container">
+        <h2 class="display split-title reveal" id="split-title">Apps when you need them.<br><span>Websites when you don't.</span></h2>
+        <div class="split-panels">
+          <article class="split-panel split-panel--apps" data-panel="apps">
+            <div class="split-copy">
+              <p class="eyebrow">Apps</p>
+              <h3>Download. Install. Use.</h3>
+              <p>Android apps for the things you do every day.</p>
+              <a class="link-arrow" href="#more" data-filter-link="apps">
+                Explore Apps
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="split-visual split-visual--phone" data-device="ic-pick"></div>
+          </article>
+          <article class="split-panel split-panel--web" data-panel="websites">
+            <div class="split-copy">
+              <p class="eyebrow">Websites</p>
+              <h3>Open. Use. Done.</h3>
+              <p>Browser tools that work instantly, with nothing to install.</p>
+              <a class="link-arrow" href="#more" data-filter-link="websites">
+                Explore Websites
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="split-visual split-visual--browser" data-device="free-compressor"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 + 08 · Behind the products -->
+    <div class="chapter chapter--dark">
+      <section class="think" id="thinking" aria-labelledby="think-title">
+        <div class="container">
+          <header class="chapter-head reveal">
+            <p class="eyebrow">Behind the products</p>
+            <h2 class="display" id="think-title">Designed around<br><span class="grad">real problems.</span></h2>
+            <p class="chapter-lead">Every product starts with a problem worth solving.</p>
+          </header>
+
+          <div class="think-grid" data-think>
+            <div class="think-steps">
+              <article class="think-step" data-step="0">
+                <span class="think-num">01</span>
+                <h3>Understand.</h3>
+                <p>Start with the problem before designing the interface.</p>
+                <div class="think-inline" data-visual="understand"></div>
+              </article>
+              <article class="think-step" data-step="1">
+                <span class="think-num">02</span>
+                <h3>Simplify.</h3>
+                <p>Remove unnecessary complexity and focus on what matters.</p>
+                <div class="think-inline" data-visual="simplify"></div>
+              </article>
+              <article class="think-step" data-step="2">
+                <span class="think-num">03</span>
+                <h3>Build.</h3>
+                <p>Turn ideas into products people can actually use.</p>
+                <div class="think-inline" data-visual="build"></div>
+              </article>
+            </div>
+            <div class="think-stage" aria-hidden="true">
+              <div class="think-visual is-active" data-screen="0" data-visual="understand"></div>
+              <div class="think-visual" data-screen="1" data-visual="simplify"></div>
+              <div class="think-visual" data-screen="2" data-visual="build"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="proc" id="process" aria-labelledby="proc-title">
+        <div class="container proc-grid">
+          <header class="proc-head reveal">
+            <p class="eyebrow">Process</p>
+            <h2 class="display" id="proc-title">One process.<br><span class="grad">Every product.</span></h2>
+            <p class="chapter-lead">Here's how it played out for Receipt Keeper.</p>
+          </header>
+          <ol class="proc-list" data-progress="line">
+            <li class="proc-line" aria-hidden="true"><i></i></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">01</span><h3>Problem</h3><p>Receipts fade, and return windows close without anyone noticing.</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">02</span><h3>Research</h3><p>When does a lost receipt actually cost something?</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">03</span><h3>Explore</h3><p>Folders, scanning, reminders and search, sketched side by side.</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">04</span><h3>Design</h3><p>One list, sorted by what's due next.</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">05</span><h3>Build</h3><p>Camera capture and a fast, simple list on Android.</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">06</span><h3>Launch</h3><p>Free to download. No account needed.</p></li>
+            <li class="proc-stage"><span class="proc-dot"></span><span class="proc-num">07</span><h3>Learn</h3><p>Auto-filled details have to look editable.</p></li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
+    <!-- 09 · Case study preview: a horizontal walk from problem to product -->
+    <section class="case" id="case-study" data-progress="pin" data-case aria-labelledby="case-title">
+      <div class="case-sticky">
+        <div class="container case-head">
+          <div>
+            <p class="eyebrow">Case study</p>
+            <h2 class="display" id="case-title">From problem<br><span>to product.</span></h2>
+          </div>
+          <div class="case-aside">
+            <p class="chapter-lead">How Receipt Keeper went from a drawer full of receipts to an app on your phone.</p>
+            <a class="link-arrow" href="app.html?slug=receipt-keeper#behind">
+              Explore the full story
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <ol class="case-track" data-case-track>
+          <li class="case-frame">
+            <div class="case-visual case-visual--paper" aria-hidden="true">
+              <div class="cs-receipt"><b>NORTHS</b><i></i><i class="s"></i><i></i><span>TOTAL $1</span><i class="s"></i></div>
+            </div>
+            <span class="case-num">01</span><h3>Problem</h3><p>Receipts fade. Deadlines slip.</p>
+          </li>
+          <li class="case-frame">
+            <div class="case-visual case-visual--grid" aria-hidden="true">
+              <div class="cs-sketch">
+                <span>Snap</span>
+                <svg viewBox="0 0 60 20"><path d="M2 12c14-8 34-8 52-2m-6-5 6 5-7 3"/></svg>
+                <span>Keep</span>
+                <svg viewBox="0 0 60 20"><path d="M2 8c16 8 36 8 52 0m-7-3 7 3-6 5"/></svg>
+                <span>Remind</span>
+              </div>
+            </div>
+            <span class="case-num">02</span><h3>Idea</h3><p>Capture it at the till. Let the app remember.</p>
+          </li>
+          <li class="case-frame">
+            <div class="case-visual" aria-hidden="true"><div class="case-phone" data-device="wireframe"></div></div>
+            <span class="case-num">03</span><h3>Wireframes</h3><p>One list, sorted by what's due next.</p>
+          </li>
+          <li class="case-frame">
+            <div class="case-visual" aria-hidden="true"><div class="case-phone" data-device="receipt-keeper"></div></div>
+            <span class="case-num">04</span><h3>Interface</h3><p>Warm, calm and quick to scan.</p>
+          </li>
+          <li class="case-frame">
+            <div class="case-visual case-visual--proto" aria-hidden="true">
+              <div class="case-phone case-phone--sm" data-device="rk-review"></div>
+              <svg class="cs-arrow" viewBox="0 0 80 40"><path d="M4 30C24 4 52 4 74 22m-8-8 8 8-10 3"/></svg>
+              <div class="case-phone case-phone--sm" data-device="rk-detail"></div>
+            </div>
+            <span class="case-num">05</span><h3>Prototype</h3><p>Walking through capture, review and save.</p>
+          </li>
+          <li class="case-frame">
+            <div class="case-visual case-visual--ship" aria-hidden="true">
+              <div class="case-phone" data-device="rk-reminder"></div>
+              <span class="cs-badge">v1.0 · Android · Free</span>
+            </div>
+            <span class="case-num">06</span><h3>Built product</h3><p>On Android, and free to use.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 10 · The person behind AppsZone -->
+    <section class="person" id="person" aria-labelledby="person-title">
+      <div class="container person-grid">
+        <div>
+          <p class="eyebrow">The person behind AppsZone</p>
+          <h2 class="display person-title" id="person-title" data-words data-progress="view" data-start="0.9" data-end="0.35">
+            <span>I like turning</span> <span>complex problems into</span> <span>simple products.</span>
+          </h2>
+        </div>
+        <div class="person-side reveal">
+          <p class="chapter-lead">AppsZone is where I explore ideas, design digital products and turn useful concepts into real experiences.</p>
+          <dl class="person-skills">
+            <div><dt>Product Design</dt><dd>UX · UI · Interaction · Systems</dd></div>
+            <div><dt>Building</dt><dd>Web · Android · AI-powered tools</dd></div>
+          </dl>
+          <a class="link-arrow" href="about/">
+            More about AppsZone
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · Final call to action -->
+    <section class="finale" id="explore" aria-labelledby="finale-title">
+      <div class="container finale-inner reveal">
+        <h2 class="display finale-title" id="finale-title">Find something <span class="grad">useful.</span></h2>
+        <p class="chapter-lead">Explore the apps and websites built by AppsZone.</p>
+        <div class="finale-ctas">
+          <a class="btn btn-primary btn-lg" href="#more" data-filter-link="apps">
+            Explore Apps
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-secondary btn-lg" href="#more" data-filter-link="websites">
+            Explore Websites
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="logo" href="#top" aria-label="AppsZone home">
+            <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="9" height="9" rx="2.6" fill="currentColor"/>
+              <rect x="13" y="2" width="9" height="9" rx="2.6" fill="currentColor"/>
+              <rect x="2" y="13" width="9" height="9" rx="2.6" fill="currentColor"/>
+              <circle cx="17.5" cy="17.5" r="4.5" fill="var(--accent)"/>
+            </svg>
+            <span>AppsZone</span>
+          </a>
+          <p>Useful apps.<br>Thoughtfully designed.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <ul>
+            <li><a href="#more" data-filter-link="apps">Apps</a></li>
+            <li><a href="#more" data-filter-link="websites">Websites</a></li>
+            <li><a href="#person">About</a></li>
+            <li><a href="how-to-install/">How to install</a></li>
+          </ul>
+          <ul>
+            <li><a href="privacy/">Privacy</a></li>
+            <li><a href="terms/">Terms</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 AppsZone</span>
+        <div class="footer-end">
+          <a href="#top">Back to top ↑</a>
+          <span class="maker" role="img" aria-label="Made with love by K" title="Made with love by K">
+            <span aria-hidden="true">K</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile: a quiet sticky link while the Receipt Keeper story is on screen -->
+  <a class="story-pill" href="app.html?slug=receipt-keeper" data-story-pill tabindex="-1" aria-hidden="true"></a>
+
+  <script src="assets/js/data.js?v=2"></script>
+  <script src="assets/js/screens.js?v=2"></script>
+  <script src="assets/js/site.js?v=2"></script>
+  <script src="assets/js/main.js?v=2"></script>
+</body>
+</html>
