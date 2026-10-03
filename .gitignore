@@ -1,7 +1,0 @@
-.DS_Store
-*.log
-node_modules/
-
-# Internal product docs: kept out of the public site
-FreeApp_Design_Strategy_UIUX_Brief(1).pdf
-FreeApp_V1_Product_UIUX_Spec(1).md
