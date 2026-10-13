@@ -13,9 +13,15 @@
   const slug = new URLSearchParams(location.search).get("slug");
   const app = apps.find((a) => a.slug === slug);
 
+  // Apps still in design have no detail page yet: send visitors to the Figma file.
+  if (app?.figmaUrl && app.figmaUrl !== "#") {
+    location.replace(app.figmaUrl);
+    return;
+  }
+
   setupHeader();
 
-  if (!app) {
+  if (!app || app.figmaUrl) {
     renderNotFound();
     setupReveal();
     return;

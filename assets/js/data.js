@@ -8,6 +8,8 @@
  *   detail page gallery. Each screenshot is `{ screen }` (a mock from
  *   screens.js) until real images exist — then use `{ src, alt }` instead.
  * - `tint` is the soft background behind a product's visuals.
+ * - Apps that are still in design set `figmaUrl` instead of APK details: they
+ *   have no detail page yet, so every link to them opens the Figma file.
  * - `level` follows the portfolio strategy (§34): 1 = utility (no "Behind the
  *   product"), 2 = product (problem, goal, decisions), 3 = portfolio product
  *   (adds hypothesis, design process and learnings).
@@ -17,168 +19,158 @@
 window.APPSZONE_DATA = {
   apps: [
     {
-      name: "Receipt Keeper",
-      slug: "receipt-keeper",
-      shortDescription: "A simple way to organize receipts and purchase information.",
+      name: "KeepSure",
+      slug: "keepsure",
+      shortDescription: "A private vault for invoices, warranties and policies, with reminders before anything lapses.",
       category: "Productivity",
       platform: "Android",
-      version: "1.0.0",
+      version: "3.0",
       apkUrl: "#", // replace with the real APK URL
-      apkSize: "18 MB",
+      apkSize: "11 MB",
       minAndroid: "Android 8.0 or later",
-      icon: { glyph: "receipt", color: "#E2733A" },
-      tint: "#F4EBE1",
-      screen: "receipt-keeper",
-      releaseDate: "2026-09-18",
-      updatedDate: "2026-09-18",
+      icon: { glyph: "shield", color: "#2563EB" },
+      tint: "#E5EDFB",
+      screen: "keepsure",
+      updatedDate: "2026-10-13",
       developer: "AppsZone",
       privacyUrl: "#",
       featured: true,
       level: 3,
 
-      headline: "Keep your receipts organized.",
+      headline: "Keep it. Track it. Claim it.",
       longDescription:
-        "Receipt Keeper helps you save purchase information, keep track of important dates and quickly find the details you need.",
+        "KeepSure reads each document you scan or upload and fills in the details, from product and seller to warranty expiry and return window. Files stay encrypted on your phone and back up to your own Google Drive, and every important date becomes a reminder.",
       screenshots: [
-        { screen: "receipt-keeper", caption: "Receipts and deadlines at a glance" },
-        { screen: "rk-capture", caption: "Scan a paper receipt" },
-        { screen: "rk-review", caption: "Check the details it found" },
-        { screen: "rk-detail", caption: "Return windows and warranties" },
+        { screen: "keepsure", caption: "Your vault at a glance" },
+        { screen: "ks-review", caption: "Details filled in for you" },
+        { screen: "ks-detail", caption: "Warranty status and every date" },
+        { screen: "ks-reminders", caption: "Reminders before anything lapses" },
       ],
       features: [
-        { glyph: "receipt", title: "Save receipts", text: "Keep important purchase information in one place." },
-        { glyph: "calendar", title: "Track important dates", text: "Keep expiry and return information easy to find." },
-        { glyph: "search", title: "Find things quickly", text: "Search and access saved information without digging through files." },
-        { glyph: "focus", title: "Keep it simple", text: "A focused interface without unnecessary features." },
+        { glyph: "focus", title: "No typing", text: "Scan or upload a file. KeepSure reads it and fills in the details for you to check." },
+        { glyph: "bell", title: "Reminders in time", text: "Expiry dates and return windows become reminders, 30, 7 and 1 day before by default." },
+        { glyph: "lock", title: "Private by default", text: "Files are encrypted on your phone and back up to your own Google Drive." },
+        { glyph: "search", title: "Find anything", text: "Search titles, sellers, products, document numbers and the text on the page." },
       ],
       howItWorks: [
-        { title: "Add your receipt.", text: "Take a photo of a paper receipt or pick one from your gallery.", screen: "rk-capture" },
-        { title: "Review the extracted information.", text: "Store, date and total are filled in for you to check.", screen: "rk-review" },
-        { title: "Save and access it whenever you need it.", text: "Return windows and warranties stay visible until they matter.", screen: "rk-detail" },
+        { title: "Scan or upload a document.", text: "Use the camera, pick a photo or PDF, or share a file into KeepSure.", screen: "ks-pick" },
+        { title: "Review what it read.", text: "Every field and line item can be edited. Low-confidence lines are marked “Check this”.", screen: "ks-review" },
+        { title: "Get reminded in time.", text: "A notification arrives before a warranty, policy or return window runs out.", screen: "ks-notify" },
       ],
       problem:
-        "Paper receipts fade, get lost in bags and pile up in drawers. When something needs to go back, the receipt, the return deadline and the warranty are rarely in the same place.",
-      goal: "Make it effortless to capture a receipt at the moment of purchase, and surface the dates that matter before they pass.",
+        "Invoices, warranty cards, insurance policies and vehicle papers end up scattered across email, WhatsApp, paper folders and photo galleries. When a product fails or a policy is due, the right document is hard to find, and the deadline has often already passed.",
+      goal: "Read each document automatically, keep it private, and turn every expiry date and return window into a reminder.",
       designApproach:
-        "Capture first, organize later. The app asks for as little as possible up front and fills in the rest from the receipt itself.",
+        "No typing. The app reads the document and fills in the details; the person only reviews and confirms.",
       designDecisions: [
         {
-          title: "Prioritize important information",
-          text: "The interface surfaces the information users need most often while keeping secondary details available without overwhelming the screen.",
+          title: "Review, don't type",
+          text: "Extraction fills every field, including each line item on a bill. Anything can be edited before saving, and low-confidence lines are marked “Check this”.",
         },
         {
-          title: "Progressive disclosure",
-          text: "Less frequently used information is revealed only when needed.",
+          title: "Backup you can see",
+          text: "A document that exists only on the phone is flagged on Home and in Settings, so data loss is never silent.",
         },
         {
-          title: "Mobile-first interaction",
-          text: "Primary actions are placed within comfortable reach for one-handed use.",
+          title: "Consent in two steps",
+          text: "Sending text to cloud AI and sending page images are separate opt-ins, and either can be withdrawn in Settings.",
         },
       ],
       hypothesis:
-        "If adding a receipt takes a few seconds, people will capture it at the point of purchase instead of meaning to do it later.",
-      process: ["Problem", "Research", "User flow", "Wireframes", "UI design", "Prototype", "Build", "Launch", "Learn"],
+        "If saving a document takes a scan and a quick check, people will keep invoices and policies in one place instead of across their inbox, chats and drawers.",
+      process: ["Problem", "Research", "User flow", "Wireframes", "UI design", "Prototype", "Build", "Test"],
       learnings:
-        "Auto-filled fields need to look editable. When extracted values looked final, small mistakes were easy to miss, so every field now shows where its value came from.",
+        "Extraction needs a fallback. When cloud AI is offline, signed out or out of quota, the on-device analyser still fills the form and says so, so adding a document always completes.",
       limitation:
-        "Text recognition works best on printed receipts. Handwritten or heavily faded receipts still need a few details typed in.",
+        "On-device reading covers Latin and Devanagari scripts; bills in other Indian scripts need the optional page-image upload. Cloud AI also runs on a free quota that a wider release will outgrow.",
       faq: [
-        { q: "Do I need an account?", a: "No. Receipt Keeper works without an account or sign-up." },
-        { q: "Can I add receipts I already photographed?", a: "Yes. You can pick an existing photo from your gallery instead of using the camera." },
+        {
+          q: "Do I need an account?",
+          a: "No. “Skip for Now” keeps everything on this device with on-device analysis. Sign in with Google to back up to your own Drive and use cloud AI.",
+        },
+        {
+          q: "Where are my files stored?",
+          a: "Encrypted on your phone, and backed up to a KeepSure folder in your own Google Drive. KeepSure can only see the files it puts there.",
+        },
       ],
     },
 
     {
-      name: "Fair Share",
-      slug: "fair-share",
-      shortDescription: "Split shared bills and see who owes what at a glance.",
-      category: "Finance",
+      name: "Echolife",
+      slug: "echolife",
+      shortDescription: "Shop eco-friendly everyday products, from bamboo toothbrushes to compostable phone cases.",
+      category: "Shopping",
       platform: "Android",
-      version: "1.2.0",
+      figmaUrl: "https://www.figma.com/design/JSJa3atUnb3rDXYumFQch9/Ecolife-Shopping?node-id=0-1&t=wpOBKGTVmQ5Wmxm4-1",
+      icon: { glyph: "leaf", color: "#007143" },
+      tint: "#E8F2DC",
+      screen: "echolife",
+      developer: "AppsZone",
+    },
+
+    {
+      name: "Event Ease",
+      slug: "event-ease",
+      shortDescription: "Find concerts, workshops and shows in your city, and book tickets in a few taps.",
+      category: "Entertainment",
+      platform: "Android",
+      figmaUrl: "https://www.figma.com/design/bqP9Vh8lfa5ZVpgyCcEeht/Event-Ease?node-id=0-1&t=P0DgzHKFS5AEbHib-1",
+      icon: { glyph: "ticket", color: "#E8590C" },
+      tint: "#FCEADF",
+      screen: "event-ease",
+      developer: "AppsZone",
+    },
+
+    {
+      name: "MK Player",
+      slug: "mk-player",
+      shortDescription: "Play every video and song on your phone, sorted into folders and kept on the device.",
+      category: "Video Players",
+      platform: "Android",
+      version: "1.1.0",
       apkUrl: "#",
-      apkSize: "14 MB",
+      apkSize: "14 MB", // placeholder until the real APK size is known
       minAndroid: "Android 8.0 or later",
-      icon: { glyph: "split", color: "#23855A" },
-      tint: "#E5EEE6",
-      screen: "fair-share",
-      releaseDate: "2026-07-22",
-      updatedDate: "2026-09-04",
+      icon: { glyph: "play", color: "#2857DA" },
+      tint: "#DFEEF2",
+      screen: "mk-player",
+      updatedDate: "2026-10-13",
       developer: "AppsZone",
       privacyUrl: "#",
       featured: true,
       level: 2,
 
-      headline: "Split costs without the awkward maths.",
+      headline: "Every video on your phone, one tap away.",
       longDescription:
-        "Fair Share keeps a running tally of shared expenses for trips, flats and dinners, then works out the fewest payments needed to settle up.",
+        "MK Player finds every video and song on your phone and sorts them into folders. The player keeps speed, subtitles and sound one tap away, and nothing you watch leaves the device.",
       screenshots: [
-        { screen: "fair-share", caption: "Where you stand, first" },
-        { screen: "fs-add", caption: "Add an expense in seconds" },
-        { screen: "fs-settle", caption: "Settle up in a few payments" },
+        { screen: "mk-player", caption: "Every folder, newest frame as its cover" },
+        { screen: "mk-videos", caption: "The whole library in one grid" },
+        { screen: "mk-play", caption: "Controls one tap away" },
+        { screen: "mk-music", caption: "Music from the same library" },
       ],
       features: [
-        { glyph: "users", title: "Groups for anything", text: "Trips, flatmates, dinners — keep each one separate." },
-        { glyph: "sliders", title: "Flexible splits", text: "Split equally, by shares or by exact amounts." },
-        { glyph: "route", title: "Fewest payments", text: "Settle-up suggests the smallest number of transfers." },
-        { glyph: "userCheck", title: "Only you need the app", text: "Friends don't have to install anything or sign up." },
+        { glyph: "sun", title: "Swipe to adjust", text: "Drag the left edge for brightness, the right for volume, sideways to seek." },
+        { glyph: "sound", title: "Music too", text: "Songs, albums and artists from the same device, with an equalizer." },
+        { glyph: "lock", title: "Hidden videos", text: "Keep private videos behind a PIN or your fingerprint." },
+        { glyph: "offline", title: "Stays on your phone", text: "Your library is never uploaded, and deleted videos wait 30 days." },
       ],
       howItWorks: [
-        { title: "Create a group.", text: "Name it and add the people sharing costs.", screen: "fair-share" },
-        { title: "Add expenses as they happen.", text: "Enter the amount, who paid and who it's for.", screen: "fs-add" },
-        { title: "Settle up.", text: "See the fewest payments that make everyone even.", screen: "fs-settle" },
+        { title: "Open it. Everything's there.", text: "Every folder that holds a video, with a count of what's new since your last visit.", screen: "mk-player" },
+        { title: "Play with simple gestures.", text: "Swipe for brightness, volume or seeking, and double-tap to skip 10 seconds.", screen: "mk-play" },
+        { title: "Keep private videos private.", text: "Hide a video or a whole folder, then unlock it with a PIN or fingerprint.", screen: "mk-hidden" },
       ],
       problem:
-        "Shared costs are easy to lose track of. After a trip, working out who owes whom turns into spreadsheets, screenshots and guesswork.",
-      goal: "Keep a fair running balance with as little input as possible, and make settling up feel neutral rather than awkward.",
+        "Videos on a phone end up scattered across camera, download and chat folders, and the built-in player offers little control over speed, subtitles or sound.",
+      goal: "One library for every video and song on the phone, with a player that keeps the controls people actually use one tap away.",
       designApproach:
-        "Show balances, not ledgers. The first thing you see is where you stand; the full history is there when you want it.",
+        "Each tab is a title, two buttons and the content. Everything beyond that sits one tap away in a sheet, so the screen stays about the video.",
       designDecisions: [
-        { title: "Balance first", text: "Each group opens on a single number — what you owe or are owed — before any list of expenses." },
-        { title: "Neutral language", text: "Plain phrasing like “you lent” and “you owe” keeps money conversations matter-of-fact." },
-        { title: "Sensible defaults", text: "New expenses split equally between everyone, which covers most cases without extra taps." },
+        { title: "One colour for time", text: "Cyan only ever means playback time, and blue only ever means a setting is on." },
+        { title: "Nothing hidden by accident", text: "Settings that differ from normal show as badges above the scrubber, so a forgotten audio delay is never a mystery." },
+        { title: "Reversible by default", text: "Deleted videos wait 30 days in Recently deleted, and the dialog says how much space they still use." },
       ],
-      faq: [{ q: "Do my friends need to install Fair Share?", a: "No. Only the person keeping track needs the app." }],
-    },
-
-    {
-      name: "Quiet Timer",
-      slug: "quiet-timer",
-      shortDescription: "A calm focus timer with no accounts and nothing to configure.",
-      category: "Productivity",
-      platform: "Android",
-      version: "1.0.1",
-      apkUrl: "#",
-      apkSize: "6 MB",
-      minAndroid: "Android 8.0 or later",
-      icon: { glyph: "timer", color: "#26232F" },
-      tint: "#ECEAF2",
-      screen: "quiet-timer",
-      releaseDate: "2026-09-02",
-      updatedDate: "2026-09-12",
-      developer: "AppsZone",
-      privacyUrl: "#",
-      featured: false,
-      level: 1,
-
-      headline: "Focus without fiddling.",
-      longDescription:
-        "Quiet Timer starts a focus session in one tap. Pick a length, press start and put your phone face down.",
-      screenshots: [
-        { screen: "quiet-timer", caption: "A calm countdown" },
-        { screen: "qt-setup", caption: "Pick a length and a sound" },
-        { screen: "qt-week", caption: "See your week" },
-      ],
-      features: [
-        { glyph: "play", title: "One-tap start", text: "Your last session length is ready to go." },
-        { glyph: "sound", title: "Gentle sounds", text: "Optional rain or café sounds, or silence." },
-        { glyph: "chart", title: "Weekly overview", text: "A simple view of the time you've focused." },
-        { glyph: "userCheck", title: "No accounts", text: "Open it and start. Nothing to sign up for." },
-      ],
-      howItWorks: [
-        { title: "Pick a length.", text: "Choose a preset or keep your last one.", screen: "qt-setup" },
-        { title: "Start the session.", text: "The timer runs quietly in the background.", screen: "quiet-timer" },
-        { title: "Take a break.", text: "A soft chime tells you when to stop.", screen: "qt-week" },
-      ],
+      faq: [{ q: "Does MK Player upload my videos?", a: "No. Your library stays on your phone and nothing is uploaded." }],
     },
 
     {
@@ -235,85 +227,6 @@ window.APPSZONE_DATA = {
       ],
     },
 
-    {
-      name: "Little Habits",
-      slug: "little-habits",
-      shortDescription: "Track small daily habits with a single tap.",
-      category: "Lifestyle",
-      platform: "Android",
-      version: "1.3.0",
-      apkUrl: "#",
-      apkSize: "9 MB",
-      minAndroid: "Android 8.0 or later",
-      icon: { glyph: "check", color: "#D9546A" },
-      tint: "#F6E6E8",
-      releaseDate: "2026-04-03",
-      updatedDate: "2026-07-15",
-      developer: "AppsZone",
-      privacyUrl: "#",
-      featured: false,
-      level: 1,
-
-      headline: "Small habits, one tap a day.",
-      longDescription:
-        "Little Habits keeps your daily habits on one screen. Tap to check in, watch streaks grow and get a gentle reminder when you need one.",
-      screenshots: [
-        { screen: "lh-today", caption: "Today on one screen" },
-        { screen: "lh-detail", caption: "Streaks and history" },
-        { screen: "lh-add", caption: "Add a habit in seconds" },
-      ],
-      features: [
-        { glyph: "tick", title: "One-tap check-ins", text: "Mark a habit done straight from the list." },
-        { glyph: "flame", title: "Streaks", text: "See how many days in a row you've kept going." },
-        { glyph: "bell", title: "Gentle reminders", text: "Optional nudges at a time you choose." },
-        { glyph: "calendar", title: "Calendar view", text: "Look back over the last few weeks at a glance." },
-      ],
-      howItWorks: [
-        { title: "Add a habit.", text: "Give it a name, a schedule and an optional reminder.", screen: "lh-add" },
-        { title: "Check in each day.", text: "One tap from the Today screen.", screen: "lh-today" },
-        { title: "Watch it add up.", text: "Streaks and a calendar show your progress.", screen: "lh-detail" },
-      ],
-    },
-
-    {
-      name: "Quick Convert",
-      slug: "quick-convert",
-      shortDescription: "Unit and currency conversions that work offline.",
-      category: "Utilities",
-      platform: "Android",
-      version: "1.0.4",
-      apkUrl: "#",
-      apkSize: "7 MB",
-      minAndroid: "Android 8.0 or later",
-      icon: { glyph: "convert", color: "#3A63D8" },
-      tint: "#E6EBF7",
-      releaseDate: "2026-02-11",
-      updatedDate: "2026-06-02",
-      developer: "AppsZone",
-      privacyUrl: "#",
-      featured: false,
-      level: 1,
-
-      headline: "Conversions in a couple of taps.",
-      longDescription:
-        "Quick Convert handles everyday units and currencies with a big, clear keypad. Currency rates are saved on your phone so it keeps working offline.",
-      screenshots: [
-        { screen: "qc-convert", caption: "Type and see the answer" },
-        { screen: "qc-currency", caption: "Currency rates, offline" },
-        { screen: "qc-units", caption: "Every everyday unit" },
-      ],
-      features: [
-        { glyph: "offline", title: "Works offline", text: "Saved rates mean no connection is needed." },
-        { glyph: "swap", title: "Instant swap", text: "Flip the direction of a conversion in one tap." },
-        { glyph: "star", title: "Favourites", text: "Pin the conversions you use most." },
-        { glyph: "history", title: "Recent history", text: "Your last conversions are one tap away." },
-      ],
-      howItWorks: [
-        { title: "Pick a category.", text: "Length, weight, temperature, currency and more.", screen: "qc-convert" },
-        { title: "Choose units.", text: "Search or scroll to the unit you need.", screen: "qc-units" },
-        { title: "Type a number.", text: "The result updates as you type.", screen: "qc-currency" },
-      ],
-    },
   ],
 
   // Live sites: cards link straight to `url` and open in a new tab.

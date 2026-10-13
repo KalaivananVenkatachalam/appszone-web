@@ -10,12 +10,12 @@
    ========================================================================== */
 
 .page-home {
-  --warm: #F5F0E9;
+  --tint: #EEF2F9; /* flagship chapter, cool to match KeepSure's light theme */
   --dark: #0B0B0C;
   /* Signature gradient (from the brand reference), tuned so large text keeps ≥ 3:1 contrast */
   --grad: linear-gradient(90deg, #4F53DD 0%, #7652D6 24%, #B45BB8 48%, #D9658F 72%, #E2714E 100%);
   --grad-light: linear-gradient(90deg, #8B90F4 0%, #B08CF2 26%, #DE90CC 52%, #F4A0B6 76%, #F8B08A 100%);
-  --grad-warm: linear-gradient(90deg, #4F53DD 0%, #7652D6 24%, #B25AB6 48%, #D2608A 72%, #D4623F 100%);
+  --grad-tint: linear-gradient(90deg, #4F53DD 0%, #7652D6 24%, #B25AB6 48%, #D2608A 72%, #D4623F 100%);
 }
 .page-home main { padding-top: 0; }
 
@@ -39,7 +39,7 @@
 }
 .chapter--dark .grad,
 .chapter--dark .display > br + span { background-image: var(--grad-light); }
-.chapter--warm .display > br + span { background-image: var(--grad-warm); }
+.chapter--light .display > br + span { background-image: var(--grad-tint); }
 
 /* Section labels get a short gradient rule; the label text itself stays solid and readable */
 .page-home main .eyebrow:not(.hero-eyebrow):not(.story-label) { display: inline-flex; align-items: center; gap: 10px; }
@@ -69,7 +69,7 @@
 
 /* Full-bleed chapters with their own tone */
 .chapter { position: relative; margin-inline: clamp(8px, 1vw, 16px); border-radius: clamp(24px, 2.4vw, 36px); }
-.chapter--warm { background: var(--warm); }
+.chapter--light { background: var(--tint); }
 .chapter--dark {
   --text: #F2F2EF;
   --text-2: #A3A39E;
@@ -289,7 +289,7 @@
 }
 
 /* ==========================================================================
-   03 · Flagship product: Receipt Keeper
+   03 · Flagship product: KeepSure
    ========================================================================== */
 .ft { padding-top: clamp(72px, 4rem + 4vw, 140px); }
 .ft-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -311,7 +311,7 @@
   place-items: center;
   border-radius: 12px;
   background: #fff;
-  color: #D0622B;
+  color: #2563EB;
   box-shadow: 0 1px 2px rgba(27, 24, 20, .06), inset 0 0 0 1px rgba(27, 24, 20, .06);
 }
 .ft-ico svg { width: 20px; height: 20px; }
@@ -389,7 +389,7 @@
 .story { padding-bottom: clamp(72px, 4rem + 4vw, 140px); }
 .story-step { display: flex; flex-direction: column; align-items: center; padding-top: 72px; text-align: center; }
 .story-label { display: inline-flex; gap: 10px; margin-bottom: 14px; }
-.story-label span { color: #C0521D; }
+.story-label span { color: #2563EB; }
 .story-title { font-size: clamp(2.125rem, 1.4rem + 2.8vw, 3.75rem); line-height: 1.02; letter-spacing: -0.045em; }
 .story-text { max-width: 30ch; margin-top: 16px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); text-wrap: pretty; }
 .story-inline { width: min(70vw, 300px); margin-top: 40px; }
@@ -664,20 +664,20 @@
   gap: 4px;
   padding: 22px 22px 20px;
   border-radius: 20px;
-  background: #F5F0E9;
-  color: #1B1814;
+  background: #F8F9FC;
+  color: #111827;
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .6);
   opacity: 0;
   transform: translate(-50%, -50%) scale(.9);
   transition: opacity .6s var(--ease), transform .7s var(--ease);
 }
 .is-active .vz-simplify .vc { opacity: 1; transform: translate(-50%, -50%); transition-delay: .7s; }
-.vc-kicker { font-size: .75rem; font-weight: 600; color: #C0521D; }
+.vc-kicker { font-size: .75rem; font-weight: 600; color: #2563EB; }
 .vc b { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; }
 .vc-amount { font-size: 2rem; font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; }
-.vc-bar { display: block; height: 5px; margin-top: 10px; border-radius: 99px; background: rgba(27, 24, 20, .1); overflow: hidden; }
-.vc-bar i { display: block; width: 93%; height: 100%; border-radius: inherit; background: #E2733A; }
-.vc-note { margin-top: 6px; font-size: .8125rem; color: #8B8178; }
+.vc-bar { display: block; height: 5px; margin-top: 10px; border-radius: 99px; background: rgba(17, 24, 39, .1); overflow: hidden; }
+.vc-bar i { display: block; width: 36%; height: 100%; border-radius: inherit; background: #3B82F6; }
+.vc-note { margin-top: 6px; font-size: .8125rem; color: #6B7280; }
 
 /* Build: design → prototype → product */
 .vz-build { display: flex; flex-direction: column; justify-content: center; gap: 24px; }
@@ -780,7 +780,7 @@
   overflow: hidden;
   aspect-ratio: 1 / 1.05;
   border-radius: 22px;
-  background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .55), transparent 70%), #F1ECE5;
+  background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .55), transparent 70%), #ECF0F7;
 }
 .case-phone { position: absolute; top: 12%; left: 50%; width: 46%; translate: -50% 0; }
 .case-num { display: block; margin-top: 18px; font-family: var(--mono); font-size: .75rem; color: var(--muted); }
@@ -819,12 +819,12 @@
 }
 .cs-sketch { display: flex; flex-direction: column; align-items: center; gap: 6px; font-family: var(--mono); font-size: .875rem; color: #1B1814; }
 .cs-sketch span { padding: 8px 18px; border: 1.5px dashed rgba(27, 24, 20, .45); border-radius: 12px; background: rgba(255, 255, 255, .6); }
-.cs-sketch svg { width: 44px; height: 26px; rotate: 90deg; fill: none; stroke: #C0521D; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cs-sketch svg { width: 44px; height: 26px; rotate: 90deg; fill: none; stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .case-visual--proto .case-phone--sm { width: 36%; top: 16%; }
 .case-visual--proto .case-phone--sm:first-child { left: 28%; }
 .case-visual--proto .case-phone--sm:last-child { left: 72%; }
 .cs-arrow { position: absolute; top: 5%; left: 50%; width: 26%; translate: -50% 0; fill: none; stroke: #6C5CE7; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; z-index: 2; }
-.case-visual--ship { background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .5), transparent 70%), #F4EBE1; }
+.case-visual--ship { background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .5), transparent 70%), #E5EDFB; }
 .cs-badge {
   position: absolute;
   bottom: 7%;
@@ -885,13 +885,12 @@
 }
 
 /* ==========================================================================
-   11 · Final call to action (fades into the footer)
+   11 · Final call to action
    ========================================================================== */
 .finale {
   position: relative;
   overflow: hidden;
   padding-block: clamp(112px, 6rem + 6vw, 240px) clamp(96px, 5rem + 4vw, 176px);
-  background: linear-gradient(180deg, var(--bg), #F0F0EB);
   text-align: center;
 }
 .finale::before {
@@ -914,10 +913,9 @@
 .finale .chapter-lead { margin-top: 22px; }
 .finale-ctas { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 40px; }
 @media (min-width: 480px) { .finale-ctas { flex-direction: row; } }
-.page-home .site-footer { background: #F0F0EB; border-top: 0; padding-top: 24px; }
 
 /* ==========================================================================
-   Mobile: sticky link during the Receipt Keeper story
+   Mobile: sticky link during the KeepSure story
    ========================================================================== */
 .story-pill { display: none; }
 @media (max-width: 899px) {

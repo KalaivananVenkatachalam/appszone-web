@@ -8,24 +8,22 @@
 (function () {
   const { apps, websites } = window.APPSZONE_DATA;
   const { glyph, appIcon, device, screens } = window.AppsZoneUI;
-  const { $, $$, appHref, setupHeader, setupReveal } = window.AppsZoneSite;
+  const { $, $$, appHref, ext, setupHeader, setupReveal } = window.AppsZoneSite;
 
   const root = document.documentElement;
   const motion = root.classList.contains("motion");
   const bySlug = (list, slug) => list.find((p) => p.slug === slug);
-  const rk = bySlug(apps, "receipt-keeper");
+  const flagship = bySlug(apps, "keepsure");
 
   const screenOf = (p) => p.screen || p.screenshots?.[0]?.screen;
   const isBrowser = (key) => screens[key]?.type === "browser";
-  // Placeholder URLs ("#") stay in this tab; real ones open a new tab.
-  const ext = (url) => (url && url !== "#" ? ' target="_blank" rel="noopener"' : "");
 
   /* ---------- Placeholders: devices and glyphs ---------- */
   function fillPlaceholders() {
     $$("[data-device]").forEach((el) => { el.innerHTML = device(el.dataset.device); });
     $$("[data-glyph]").forEach((el) => { el.innerHTML = glyph(el.dataset.glyph); });
-    const meta = $("[data-rk-meta]");
-    if (meta) meta.textContent = `Free · Android · ${rk.apkSize}`;
+    const meta = $("[data-flagship-meta]");
+    if (meta) meta.textContent = `Free · Android · ${flagship.apkSize}`;
   }
 
   /* ---------- 02 · Collection: composition offsets per card ---------- */
@@ -34,7 +32,7 @@
     if (!grid) return;
     const items = [
       { p: bySlug(websites, "html-to-figma"), web: true, dx: "18%", dy: "-14%", r: "-5deg", ds: 0 },
-      { p: bySlug(apps, "fair-share"), web: false, dx: "0%", dy: "8%", r: "3deg", ds: 0.06 },
+      { p: bySlug(apps, "mk-player"), web: false, dx: "0%", dy: "8%", r: "3deg", ds: 0.06 },
       { p: bySlug(websites, "free-compressor"), web: true, dx: "-18%", dy: "22%", r: "-2deg", ds: 0 },
     ];
     grid.innerHTML = items
@@ -64,7 +62,7 @@
     const status = $("[data-rail-status]");
 
     // Interleave apps and websites so the rail alternates phone and browser visuals.
-    const appItems = apps.filter((a) => a.slug !== rk.slug);
+    const appItems = apps.filter((a) => a.slug !== flagship.slug);
     const items = [];
     for (let i = 0; i < Math.max(appItems.length, websites.length); i++) {
       if (appItems[i]) items.push({ ...appItems[i], type: "apps" });
@@ -75,14 +73,15 @@
       .map((p) => {
         const key = screenOf(p);
         const web = p.type === "websites";
+        const design = !web && Boolean(p.figmaUrl);
         return `
           <article class="rc-card" data-type="${p.type}">
             <div class="rc-visual${isBrowser(key) ? " is-browser" : ""}" style="--tint:${p.tint}">${device(key)}</div>
             <div class="rc-info">
-              <h3><a class="stretched" href="${web ? p.url : appHref(p)}"${web ? ext(p.url) : ""}>${p.name}</a></h3>
-              <span class="rc-meta">${web ? "Web" : "Android"} · ${p.category}</span>
+              <h3><a class="stretched" href="${web ? p.url : appHref(p)}"${ext(web ? p.url : p.figmaUrl)}>${p.name}</a></h3>
+              <span class="rc-meta">${web ? "Web" : "Android"} · ${p.category}${design ? " · In design" : ""}</span>
               <p>${p.shortDescription}</p>
-              <span class="link-arrow" aria-hidden="true">${web ? "Visit" : "Explore"} ${glyph(web ? "external" : "arrow")}</span>
+              <span class="link-arrow" aria-hidden="true">${web ? "Visit" : design ? "View in Figma" : "Explore"} ${glyph(web || design ? "external" : "arrow")}</span>
             </div>
           </article>`;
       })
@@ -126,18 +125,18 @@
       const edge = (d, i, cls = "") => `<path class="edge ${cls}" pathLength="1" d="${d}" style="--i:${i}"/>`;
       return `
         <div class="vz vz-understand">
-          <svg class="vz-flow" viewBox="0 0 480 440" role="img" aria-label="Problem map: paper receipts fade or get lost, so return windows are missed. Insight: capture the receipt at the till.">
+          <svg class="vz-flow" viewBox="0 0 480 440" role="img" aria-label="Problem map: invoices and policies get lost in inboxes, chats and paper folders, so warranties and policies lapse unnoticed. Insight: scan once and get reminded.">
             ${edge("M240 50V84", 1)}
             ${edge("M240 124v20H110v20", 2)}${edge("M240 124v20h130v20", 2)}
             ${edge("M110 204v36", 3)}${edge("M370 204v36", 3)}
             ${edge("M110 280v18h130v18", 4)}${edge("M370 280v18H240v18", 4)}
             ${edge("M240 356v36", 5, "idea")}
             ${node(165, 10, 150, "Buy something", 0)}
-            ${node(140, 84, 200, "Get a paper receipt", 1)}
-            ${node(20, 164, 180, "Kept in a wallet", 2)}${node(280, 164, 180, "Put in a drawer", 2)}
-            ${node(20, 240, 180, "The ink fades", 3)}${node(280, 240, 180, "Can't find it", 3)}
-            ${node(115, 316, 250, "Return window missed", 4, "warn")}
-            ${node(95, 392, 290, "Insight: capture it at the till", 5, "idea")}
+            ${node(140, 84, 200, "Get an invoice or policy", 1)}
+            ${node(20, 164, 180, "Lost in an inbox", 2)}${node(280, 164, 180, "Buried in WhatsApp", 2)}
+            ${node(20, 240, 180, "Paper copy fades", 3)}${node(280, 240, 180, "Can't find it", 3)}
+            ${node(115, 316, 250, "Warranty or policy lapses", 4, "warn")}
+            ${node(95, 392, 290, "Insight: scan once, get reminded", 5, "idea")}
           </svg>
         </div>`;
     },
@@ -146,7 +145,7 @@
       const n = (count, tag = "i", inner = "") =>
         Array.from({ length: count }, () => `<${tag} class="n" style="--i:${i++}">${inner}</${tag}>`).join("");
       return `
-        <div class="vz vz-simplify" role="img" aria-label="A cluttered screen full of fields and buttons dissolves into one clear card: Northside Tech, $129.00, return by October 12.">
+        <div class="vz vz-simplify" role="img" aria-label="A cluttered screen full of fields and buttons dissolves into one clear card: Samsung Galaxy S24 Ultra, ₹1,34,497, warranty until 21 February 2027, 131 days remaining.">
           <div class="vm">
             <div class="vm-bar">${n(7)}</div>
             <div class="vm-tabs">${n(5)}</div>
@@ -155,21 +154,21 @@
             <div class="vm-actions">${n(3)}</div>
           </div>
           <div class="vc">
-            <span class="vc-kicker">Return by Oct 12</span>
-            <b>Northside Tech</b>
-            <span class="vc-amount">$129.00</span>
+            <span class="vc-kicker">Warranty until 21 Feb 2027</span>
+            <b>Samsung Galaxy S24 Ultra</b>
+            <span class="vc-amount">₹1,34,497</span>
             <span class="vc-bar"><i></i></span>
-            <span class="vc-note">13 days left</span>
+            <span class="vc-note">131 days remaining</span>
           </div>
         </div>`;
     },
     build() {
       return `
-        <div class="vz vz-build" role="img" aria-label="The same screen as a wireframe, then a clickable prototype, then the finished Receipt Keeper app.">
+        <div class="vz vz-build" role="img" aria-label="The same screen as a wireframe, then a clickable prototype, then the finished KeepSure app.">
           <div class="vb-phone">
             <div class="vb-layer">${device("wireframe")}</div>
-            <div class="vb-layer"><span class="vb-hot" style="left:78%;top:88%"></span><span class="vb-hot" style="left:50%;top:54%"></span></div>
-            <div class="vb-layer vb-product">${device("receipt-keeper")}</div>
+            <div class="vb-layer"><span class="vb-hot" style="left:18%;top:44%"></span><span class="vb-hot" style="left:50%;top:64%"></span></div>
+            <div class="vb-layer vb-product">${device("keepsure")}</div>
           </div>
           <ol class="vb-steps"><li>Design</li><li>Prototype</li><li>Product</li></ol>
         </div>`;
@@ -265,7 +264,7 @@
     let vh = window.innerHeight;
     let queued = false;
 
-    if (pill) pill.innerHTML = `${appIcon(rk.icon)}<span class="sp-name">${rk.name}</span><span class="sp-cta">Explore ${glyph("arrow")}</span>`;
+    if (pill) pill.innerHTML = `${appIcon(flagship.icon)}<span class="sp-name">${flagship.name}</span><span class="sp-cta">Explore ${glyph("arrow")}</span>`;
 
     const progress = (t, r) => {
       if (t.type === "pin") return -r.top / Math.max(1, r.height - vh);
@@ -293,7 +292,7 @@
       // Process: every stage above the reading line is lit.
       stages.forEach((s) => s.classList.toggle("is-on", s.getBoundingClientRect().top + 38 < vh * 0.55));
 
-      // Mobile story pill: while the Receipt Keeper chapter fills the screen.
+      // Mobile story pill: while the KeepSure chapter fills the screen.
       if (chapter && pill) {
         const r = chapter.getBoundingClientRect();
         const show = !desktop.matches && r.top < vh * 0.4 && r.bottom > vh * 0.95;

@@ -8,7 +8,10 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const appHref = (app) => `app.html?slug=${app.slug}`;
+  // Apps still in design have no detail page yet, so they link to their Figma file.
+  const appHref = (app) => app.figmaUrl || `app.html?slug=${app.slug}`;
+  // Placeholder URLs ("#") stay in this tab; real ones open a new tab.
+  const ext = (url) => (url && url !== "#" ? ' target="_blank" rel="noopener"' : "");
   const siteHref = (site) => `websites/${site.slug}/`;
   const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
@@ -28,11 +31,11 @@
     return `
       <article class="app-card" data-category="${a.category}" style="--i:${i}">
         ${appIcon(a.icon, "app-icon--lg")}
-        <h3><a class="stretched" href="${appHref(a)}">${a.name}</a></h3>
+        <h3><a class="stretched" href="${appHref(a)}"${ext(a.figmaUrl)}>${a.name}</a></h3>
         <p>${a.shortDescription}</p>
         <div class="app-foot">
           ${meta(["Android", a.category])}
-          <span class="link-arrow" aria-hidden="true">View app ${glyph("arrow")}</span>
+          <span class="link-arrow" aria-hidden="true">${a.figmaUrl ? `View in Figma ${glyph("external")}` : `View app ${glyph("arrow")}`}</span>
         </div>
       </article>`;
   }
@@ -127,7 +130,7 @@
   }
 
   window.AppsZoneSite = {
-    $, $$, appHref, siteHref, plural, formatDate, shortDate, monthYear, meta, TYPE_GLYPH,
+    $, $$, appHref, ext, siteHref, plural, formatDate, shortDate, monthYear, meta, TYPE_GLYPH,
     appCard, setupHeader, setupCarouselDots, setupReveal,
   };
 })();
