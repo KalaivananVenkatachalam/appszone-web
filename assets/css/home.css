@@ -282,9 +282,11 @@
   }
   .motion .col-visual { clip-path: inset(0 0 calc((1 - var(--ke)) * -45%) 0 round 18px); overflow: visible; }
   .motion .col-visual::before { opacity: var(--ke); }
+  /* Slide the text in with balanced margins, not a transform: a transform would make
+     .col-info the box for the title's stretched link, leaving the picture unclickable */
   .motion .col-info {
     opacity: clamp(0, calc((var(--ke) - .6) / .4), 1);
-    transform: translateY(calc((1 - var(--ke)) * 16px));
+    margin-block: calc((1 - var(--ke)) * 16px) calc((1 - var(--ke)) * -16px);
   }
 }
 
