@@ -26,27 +26,33 @@
     if (meta) meta.textContent = `Free · Android · ${flagship.apkSize}`;
   }
 
-  /* ---------- 02 · Collection: composition offsets per card ---------- */
+  // Website cards open the product page (the whole card) and carry a second link to the live site.
+  const cardActions = (p) => `
+    <span class="card-actions">
+      <span class="link-arrow" aria-hidden="true">Explore ${glyph("arrow")}</span>
+      <a class="card-visit" href="${p.url}"${ext(p.url)} aria-label="Visit ${p.domain}">Visit site ${glyph("external")}</a>
+    </span>`;
+
+  /* ---------- 02 · Collection: live design tools, composition offsets per card ---------- */
   function renderCollection() {
     const grid = $("[data-collection]");
     if (!grid) return;
     const items = [
-      { p: bySlug(websites, "html-to-figma"), web: true, dx: "18%", dy: "-14%", r: "-5deg", ds: 0 },
-      { p: bySlug(apps, "mk-player"), web: false, dx: "0%", dy: "8%", r: "3deg", ds: 0.06 },
-      { p: bySlug(websites, "free-compressor"), web: true, dx: "-18%", dy: "22%", r: "-2deg", ds: 0 },
+      { p: bySlug(websites, "html-to-figma"), dx: "18%", dy: "-14%", r: "-5deg", ds: 0 },
+      { p: bySlug(websites, "docs-to-design"), dx: "0%", dy: "8%", r: "3deg", ds: 0.06 },
+      { p: bySlug(websites, "free-compressor"), dx: "-18%", dy: "22%", r: "-2deg", ds: 0 },
     ];
     grid.innerHTML = items
-      .map(({ p, web, dx, dy, r, ds }) => {
+      .map(({ p, dx, dy, r, ds }) => {
         const key = screenOf(p);
-        const href = web ? p.url : appHref(p);
         return `
           <article class="col-card" style="--dx:${dx};--dy:${dy};--r:${r};--ds:${ds}">
             <div class="col-visual${isBrowser(key) ? " is-browser" : ""}" style="--tint:${p.tint}">${device(key)}</div>
             <div class="col-info">
-              <span class="col-kind">${web ? "Website" : "Android app"}</span>
-              <h3><a class="stretched" href="${href}"${web ? ext(p.url) : ""}>${p.name}</a></h3>
+              <span class="col-meta"><span class="col-kind">${p.domain}</span><span class="live-tag">Live</span></span>
+              <h3><a class="stretched" href="${appHref(p)}">${p.name}</a></h3>
               <p>${p.shortDescription}</p>
-              <span class="link-arrow" aria-hidden="true">${web ? "Visit" : "Explore"} ${glyph(web ? "external" : "arrow")}</span>
+              ${cardActions(p)}
             </div>
           </article>`;
       })
@@ -78,10 +84,10 @@
           <article class="rc-card" data-type="${p.type}">
             <div class="rc-visual${isBrowser(key) ? " is-browser" : ""}" style="--tint:${p.tint}">${device(key)}</div>
             <div class="rc-info">
-              <h3><a class="stretched" href="${web ? p.url : appHref(p)}"${ext(web ? p.url : p.figmaUrl)}>${p.name}</a></h3>
+              <h3><a class="stretched" href="${appHref(p)}"${ext(p.figmaUrl)}>${p.name}</a></h3>
               <span class="rc-meta">${web ? "Web" : "Android"} · ${p.category}${design ? " · In design" : ""}</span>
               <p>${p.shortDescription}</p>
-              <span class="link-arrow" aria-hidden="true">${web ? "Visit" : design ? "View in Figma" : "Explore"} ${glyph(web || design ? "external" : "arrow")}</span>
+              ${web ? cardActions(p) : `<span class="link-arrow" aria-hidden="true">${design ? "View in Figma" : "Explore"} ${glyph(design ? "external" : "arrow")}</span>`}
             </div>
           </article>`;
       })

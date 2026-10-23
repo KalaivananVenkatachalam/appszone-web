@@ -251,6 +251,32 @@
 .col-visual.is-browser .device { top: 24%; width: 88%; }
 .col-info { display: flex; flex-direction: column; flex: 1; padding: 18px 12px 12px; }
 .col-kind { font-family: var(--mono); font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.col-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+/* Website cards: the card opens the product page; "Visit site" sits above the stretched link */
+.card-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 18px; }
+.col-info .card-actions .link-arrow,
+.rc-info .card-actions .link-arrow { margin: 0; padding: 0; }
+.card-visit {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 99px;
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.card-visit svg { width: 14px; height: 14px; }
+.card-visit:hover { background: var(--text); color: var(--bg); box-shadow: none; }
+.card-visit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.col-head-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 14px; }
+.col-head-meta .eyebrow { margin-bottom: 0; }
 .col-info h3 { margin-top: 8px; font-size: var(--fs-card); letter-spacing: -0.025em; }
 .col-info p { margin-top: 8px; color: var(--text-2); font-size: .9375rem; text-wrap: pretty; }
 .col-info .link-arrow { margin-top: auto; padding-top: 18px; }

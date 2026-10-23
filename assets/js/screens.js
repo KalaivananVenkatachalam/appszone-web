@@ -38,6 +38,11 @@
     chevronRight: '<path d="m9.5 6 6 6-6 6"/>',
     tick: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',
+    palette: '<path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.8-.9 1.5-1.9l-.4-1.2a1.6 1.6 0 0 1 1.5-2.1h2.1a3.8 3.8 0 0 0 3.8-3.8C20.5 7 16.7 3.5 12 3.5z"/><circle cx="7.8" cy="11" r=".9" fill="currentColor"/><circle cx="10.5" cy="7.3" r=".9" fill="currentColor"/><circle cx="15" cy="7.8" r=".9" fill="currentColor"/>',
+    pointer: '<path d="m5 4 5.5 15 2.2-6.3L19 10.5z"/>',
+    refresh: '<path d="M19.5 12a7.5 7.5 0 0 1-13.1 5M4.5 12a7.5 7.5 0 0 1 13.1-5"/><path d="M17.8 3.5V7h-3.5M6.2 20.5V17h3.5"/>',
+    type: '<path d="M5 7V5h14v2M12 5v14M9 19h6"/>',
+    target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6" fill="currentColor"/>',
   };
 
   function glyph(name, extra = "") {
@@ -131,6 +136,47 @@
                   <i class="hf-h tl"></i><i class="hf-h tr"></i><i class="hf-h bl"></i><i class="hf-h br"></i>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>`,
+    },
+
+    "docs-to-design": {
+      type: "browser",
+      url: "docstodesign.in",
+      label: "Docs to Design website importing a PDF into Figma as editable layers",
+      html: `
+        <div class="browser-page dd">
+          <div class="dd-nav">
+            <span class="dd-logo">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 2.5h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3z" opacity=".28"/><path d="M10.5 6h5.25v3.75a2 2 0 0 0 2 2h3.75v6.75a3 3 0 0 1-3 3h-8a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3z"/><path d="M16.75 6l4.75 4.75h-2.75a2 2 0 0 1-2-2z" opacity=".58"/></svg>
+              <span>Docs to <em>Design</em></span>
+            </span>
+            <span class="dd-links"><span>How it works</span><span>Features</span><span>Pricing</span></span>
+            <span class="dd-btn">Get started</span>
+          </div>
+          <div class="dd-body">
+            <div class="dd-copy">
+              <span class="dd-pill">Early access · Figma plugin</span>
+              <span class="dd-title">Turn any Docs into <em>editable Figma layers.</em></span>
+              <span class="dd-text">Bring a PDF, PowerPoint or Word file into Figma and keep designing.</span>
+              <span class="dd-cta">Get started free ${glyph("arrow")}</span>
+              <span class="dd-note">${glyph("lock")}Your documents never leave your computer</span>
+            </div>
+            <div class="dd-stage">
+              <div class="dd-doc">
+                <span class="dd-doc-tag">PDF</span>
+                <i class="w60"></i><i class="w40"></i>
+                <span class="dd-doc-img"></span>
+                <i></i><i class="w80"></i><i class="w50"></i>
+              </div>
+              <div class="dd-plugin">
+                <span class="dd-plugin-bar"><b>Docs to Design</b><span class="dd-tabs"><i class="on">Import</i><i>Export</i></span></span>
+                <span class="dd-file"><span class="dd-file-ico">PDF</span><span class="dd-file-meta"><b>brand-guidelines.pdf</b><small>3 pages · 2.4 MB</small></span></span>
+                <span class="dd-seg"><i class="on">Editable</i><i>Outlines</i><i>Image</i></span>
+                <span class="dd-import">Import 3 pages</span>
+              </div>
+              <span class="dd-result">${glyph("tick")}24 text layers</span>
             </div>
           </div>
         </div>`,
@@ -309,5 +355,24 @@
       </div>`;
   }
 
-  window.AppsZoneUI = { glyph, appIcon, device, screens: SCREENS };
+  // Real screenshots of the websites: a page section in browser chrome, or a
+  // Figma plugin window on its own.
+  function webShot({ src, alt = "" }, url, cls = "") {
+    return `
+      <div class="device device--browser ${cls}">
+        <div class="browser browser--shot">
+          <div class="browser-bar">
+            <span class="browser-dots"><i></i><i></i><i></i></span>
+            <span class="browser-url">${glyph("lock")}${url}</span>
+          </div>
+          <img src="${src}" alt="${alt}" loading="lazy" decoding="async">
+        </div>
+      </div>`;
+  }
+
+  function pluginShot({ src, alt = "" }, cls = "") {
+    return `<div class="plugin-shot ${cls}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async"></div>`;
+  }
+
+  window.AppsZoneUI = { glyph, appIcon, device, webShot, pluginShot, screens: SCREENS };
 })();

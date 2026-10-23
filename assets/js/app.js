@@ -1,17 +1,20 @@
 /*
- * AppsZone — app detail page (app.html?slug=…).
- * Renders one app from data.js following spec §14–21: identity and download,
- * screenshots, what it does, features, how it works, product information and
- * install guidance, then the portfolio layer, FAQ and related apps.
+ * AppsZone — product detail page (app.html?slug=…).
+ * Renders one app or website from data.js following spec §14–21: identity and
+ * download (or a link to the live site), screenshots, what it does, features,
+ * how it works, product information, then the portfolio layer (a full case
+ * study for level 3 products), FAQ and related products.
  */
 (function () {
   const { apps, websites } = window.APPSZONE_DATA;
-  const { glyph, appIcon, device } = window.AppsZoneUI;
-  const { $, $$, formatDate, monthYear, meta, appCard, setupHeader, setupCarouselDots, setupReveal } = window.AppsZoneSite;
+  const { glyph, appIcon, device, webShot, pluginShot } = window.AppsZoneUI;
+  const { $, $$, ext, formatDate, shortDate, monthYear, meta, appCard, setupHeader, setupCarouselDots, setupReveal } = window.AppsZoneSite;
 
   const main = $("[data-app-page]");
   const slug = new URLSearchParams(location.search).get("slug");
-  const app = apps.find((a) => a.slug === slug);
+  // Websites share this page: same sections, with a link to the live site instead of a download.
+  const app = apps.find((a) => a.slug === slug) || websites.find((w) => w.slug === slug);
+  const isWeb = websites.includes(app);
 
   // Apps still in design have no detail page yet: send visitors to the Figma file.
   if (app?.figmaUrl && app.figmaUrl !== "#") {
@@ -31,8 +34,15 @@
   const pad = (n) => String(n).padStart(2, "0");
   const COUNT = ["zero", "one", "two", "three", "four", "five", "six"];
 
-  // Real screenshots ({ src }) render as images; otherwise use the mock screen.
-  const shot = (s) => (s.src ? `<img src="${s.src}" alt="${s.alt || ""}" loading="lazy">` : device(s.screen));
+  // Real screenshots ({ src }) render as images, framed as a browser or plugin window
+  // for websites; otherwise use the mock screen.
+  const shot = (s) => {
+    if (s.frame === "browser") return webShot(s, app.domain);
+    if (s.frame === "plugin") return pluginShot(s);
+    return s.src ? `<img src="${s.src}" alt="${s.alt || ""}" loading="lazy">` : device(s.screen);
+  };
+  const visitLink = (cls = "btn-lg") =>
+    `<a class="btn btn-primary ${cls}" href="${app.url}"${ext(app.url)}>Visit ${app.domain} ${glyph("external")}</a>`;
 
   const dlButton = (cls = "") => `
     <button type="button" class="btn btn-primary dl ${cls}" data-download data-state="idle">
@@ -42,7 +52,42 @@
     </button>`;
 
   /* ---------- Sections ---------- */
+  function webHero() {
+    const { hero: h } = app;
+    return `
+      <section class="app-hero">
+        <div class="container">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a><span aria-hidden="true">/</span>
+            <a href="index.html#more">Websites</a><span aria-hidden="true">/</span>
+            <span aria-current="page">${app.name}</span>
+          </nav>
+          <div class="app-hero-grid">
+            <div class="app-id">
+              <div class="app-id-top rise" style="--i:0">${appIcon(app.icon, "app-icon--hero")}<span class="live-tag">Live</span></div>
+              <h1 class="app-title rise" style="--i:1">${app.name}</h1>
+              <p class="app-sub rise" style="--i:2">${app.shortDescription}</p>
+              <div class="rise" style="--i:3">${meta([app.platform, app.category, "Free"])}</div>
+              <div class="app-ctas rise" style="--i:4">
+                ${visitLink()}
+                <a class="btn btn-secondary btn-lg" href="#behind">Read the case study ${glyph("arrow")}</a>
+              </div>
+              <dl class="app-facts rise" style="--i:5">
+                <div><dt>Status</dt><dd>${app.status}</dd></div>
+                <div><dt>Launched</dt><dd>${formatDate(app.launchDate)}</dd></div>
+                <div><dt>Updated</dt><dd>${formatDate(app.updatedDate)}</dd></div>
+              </dl>
+            </div>
+            <div class="app-visual app-visual--web" aria-hidden="true">
+              <div class="wv-browser rise" style="--i:2">${webShot(h, app.domain)}</div>
+            </div>
+          </div>
+        </div>
+      </section>`;
+  }
+
   function hero() {
+    if (isWeb) return webHero();
     const secondary = website
       ? `<a class="btn btn-secondary btn-lg" href="${website.url}" target="_blank" rel="noopener">Try the web version ${glyph("external")}</a>`
       : `<a class="btn btn-secondary btn-lg" href="how-to-install/">How to install</a>`;
@@ -84,7 +129,7 @@
       <section class="section section--gallery" aria-labelledby="shots-title">
         <div class="container">
           <h2 class="eyebrow" id="shots-title">Screenshots</h2>
-          <div class="gallery stagger" style="--n:${app.screenshots.length}" data-gallery>
+          <div class="gallery${app.screenshots[0].frame === "browser" ? " gallery--web" : ""} stagger" style="--n:${app.screenshots.length}" data-gallery>
             ${app.screenshots
               .map((s, i) => `<figure class="shot" style="--i:${i}"><div class="shot-frame">${shot(s)}</div><figcaption>${s.caption}</figcaption></figure>`)
               .join("")}
@@ -132,7 +177,7 @@
               .map(
                 (s, i) => `
                 <li class="hiw-step" style="--i:${i}">
-                  <div class="hiw-visual" aria-hidden="true">${device(s.screen)}</div>
+                  <div class="hiw-visual${s.src ? " hiw-visual--img" : ""}" aria-hidden="true">${s.src ? `<img src="${s.src}" alt="" loading="lazy" decoding="async">` : device(s.screen)}</div>
                   <div class="hiw-body"><span class="hiw-num">${pad(i + 1)}</span><h3>${s.title}</h3><p>${s.text}</p></div>
                 </li>`
               )
@@ -142,7 +187,37 @@
       </section>`;
   }
 
+  function webInfo() {
+    const rows = [
+      ["Platform", app.platform],
+      ["Category", app.category],
+      ["Price", "Free"],
+      ["Status", app.status],
+      ["Launched", monthYear(app.launchDate)],
+      ["Updated", monthYear(app.updatedDate)],
+      ["Website", `<a class="text-link" href="${app.url}"${ext(app.url)}>${app.domain}</a>`],
+      ["Developer", app.developer],
+    ];
+    return `
+      <section class="section" aria-labelledby="info-title">
+        <div class="container info-grid">
+          <div class="reveal">
+            <p class="eyebrow">Details</p>
+            <h2 class="h2" id="info-title">Product information</h2>
+            <dl class="info-table">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+          </div>
+          <aside class="trust reveal" aria-labelledby="trust-title">
+            <span class="trust-icon">${glyph("external")}</span>
+            <h3 id="trust-title">Try it now</h3>
+            <p>${app.pricing}</p>
+            <div class="trust-cta">${visitLink("")}</div>
+          </aside>
+        </div>
+      </section>`;
+  }
+
   function productInfo() {
+    if (isWeb) return webInfo();
     const rows = [
       ["Platform", app.platform],
       ["Version", app.version],
@@ -190,11 +265,13 @@
         <div class="container">
           <div class="section-head reveal">
             <div>
-              <p class="eyebrow">Design notes</p>
+              <p class="eyebrow">${app.story ? "Case study" : "Design notes"}</p>
               <h2 class="h2" id="behind-title">Behind the product</h2>
               <p class="section-desc">${deep ? "Why it exists, how it was designed and what I learned from shipping it." : "Why it exists and the decisions that shaped it."}</p>
             </div>
           </div>
+
+          ${app.story ? story() : ""}
 
           <div class="behind-trio stagger">
             ${[["Problem", app.problem], ["Goal", app.goal], ["Design approach", app.designApproach]]
@@ -215,6 +292,10 @@
                  </div>`
               : ""
           }
+
+          ${app.timeline ? timeline() : ""}
+
+          ${app.proof ? proof() : ""}
 
           ${
             deep && app.process
@@ -239,8 +320,102 @@
       </section>`;
   }
 
+  /* ---------- UX timeline helpers: dated phases, planned work kept apart ---------- */
+  // Phase dates are days (YYYY-MM-DD) or, for work before the first files, months (YYYY-MM).
+  const day = (d) => (d.length === 7 ? new Date(`${d}-01T00:00:00`).toLocaleDateString("en-US", { month: "short" }) : shortDate(d));
+  const phaseDates = (t) => t.when || (t.start === t.end ? day(t.start) : `${day(t.start)} – ${day(t.end)}`);
+  function timelineSpan() {
+    const dated = (app.timeline || []).filter((t) => t.start && !t.planned);
+    if (!dated.length) return null;
+    const first = dated.map((t) => t.start).sort()[0];
+    const last = dated.map((t) => t.end).sort().pop();
+    const days = Math.round((new Date(last) - new Date(first.length === 7 ? `${first}-01` : first)) / 864e5) + 1;
+    const length = app.duration || (days < 14 ? `${days} days` : `${Math.round(days / 7)} weeks`);
+    const launch = app.timeline.find((t) => t.planned && t.end);
+    return { first, last, length, launch };
+  }
+
+  function story() {
+    const span = timelineSpan();
+    const glance = [
+      ["Role", "Product design and build"],
+      ["Timeline", span && `${day(span.first)} – ${formatDate(span.last)}`],
+      ["Duration", span?.length],
+      ["Launch", span?.launch && `${formatDate(span.launch.end)}, planned`],
+      ["Platform", app.platform],
+      ["Status", app.status],
+    ].filter(([, v]) => v);
+    return `
+      <div class="cs-story">
+        <div class="cs-story-text reveal">
+          <h3 class="cs-label">Why I built it</h3>
+          ${app.story.map((p) => `<p>${p}</p>`).join("")}
+        </div>
+        <aside class="cs-glance reveal" aria-label="At a glance">
+          <h3 class="cs-label">At a glance</h3>
+          <dl>${glance.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+        </aside>
+      </div>`;
+  }
+
+  // The UX timeline: a phase overview, then each phase with what happened and what it produced.
+  function timeline() {
+    const span = timelineSpan();
+    return `
+      <div class="ux-head reveal">
+        <h3 class="behind-sub">UX timeline</h3>
+        ${
+          span
+            ? `<p><b>${span.length}</b> from first research to ${span.launch ? "today's build" : "launch"}, ${day(span.first)} – ${formatDate(span.last)}.${
+                span.launch ? ` Launch is planned for ${formatDate(span.launch.end)}.` : ""
+              }</p>`
+            : ""
+        }
+      </div>
+      <ol class="ux-phases stagger" aria-label="Phases">
+        ${app.timeline
+          .map(
+            (t, i) => `
+            <li class="ux-phase${t.planned ? " is-planned" : ""}" style="--i:${i}">
+              <span class="ux-track" aria-hidden="true"></span>
+              <small>${pad(i + 1)}</small><b>${t.phase}</b><span>${phaseDates(t)}</span>
+            </li>`
+          )
+          .join("")}
+      </ol>
+      <ol class="timeline stagger">
+        ${app.timeline
+          .map(
+            (t, i) => `
+            <li class="tl-item${t.planned ? " is-planned" : ""}" style="--i:${i}">
+              <div class="tl-when"><b>${t.phase}</b>${t.start ? `<time datetime="${t.start}">${phaseDates(t)}</time>` : `<span>${phaseDates(t)}</span>`}</div>
+              <span class="tl-dot" aria-hidden="true"></span>
+              <div class="tl-body">
+                <h4>${t.title}${t.planned ? ' <em class="tl-planned">Planned</em>' : ""}</h4>
+                <p>${t.text}</p>
+                ${t.outputs?.length ? `<ul class="tl-outputs" aria-label="Outputs">${t.outputs.map((o) => `<li>${o}</li>`).join("")}</ul>` : ""}
+              </div>
+            </li>`
+          )
+          .join("")}
+      </ol>`;
+  }
+
+  function proof() {
+    return `
+      <h3 class="behind-sub reveal">Quality, measured</h3>
+      <div class="proof stagger">
+        ${app.proof.map((p, i) => `<div class="proof-item" style="--i:${i}"><b>${p.value}</b><span>${p.label}</span></div>`).join("")}
+      </div>
+      ${app.proofNote ? `<p class="proof-note reveal">${app.proofNote}</p>` : ""}`;
+  }
+
+  function webFaq() {
+    return [{ q: `Is ${app.name} free?`, a: app.pricing }, ...(app.faq || [])];
+  }
+
   function faq() {
-    const items = [
+    const items = isWeb ? webFaq() : [
       { q: `Is ${app.name} free?`, a: `Yes. ${app.name} is free to download and use.` },
       ...(app.faq || []),
       {
@@ -255,7 +430,11 @@
           <div class="reveal">
             <p class="eyebrow">FAQ</p>
             <h2 class="h2" id="faq-title">Questions</h2>
-            <p class="section-desc">Need help installing? Read the <a class="text-link" href="how-to-install/">installation guide</a>.</p>
+            <p class="section-desc">${
+              isWeb
+                ? `Something else? Visit <a class="text-link" href="${app.url}"${ext(app.url)}>${app.domain}</a>.`
+                : `Need help installing? Read the <a class="text-link" href="how-to-install/">installation guide</a>.`
+            }</p>
           </div>
           <div class="faq-list reveal">
             ${items.map((f) => `<details class="faq-item"><summary>${f.q}<span class="faq-icon" aria-hidden="true"></span></summary><p>${f.a}</p></details>`).join("")}
@@ -264,9 +443,23 @@
       </section>`;
   }
 
+  // Websites link to their own detail page, like apps.
+  const webCard = (w, i = 0) => `
+    <article class="app-card" style="--i:${i}">
+      ${appIcon(w.icon, "app-icon--lg")}
+      <h3><a class="stretched" href="app.html?slug=${w.slug}">${w.name}</a></h3>
+      <p>${w.shortDescription}</p>
+      <div class="app-foot">
+        ${meta([w.platform, w.category])}
+        <span class="link-arrow" aria-hidden="true">Explore ${glyph("arrow")}</span>
+      </div>
+    </article>`;
+
   function related() {
     const others = apps.filter((a) => a.slug !== app.slug);
-    const picks = [...others.filter((a) => a.category === app.category), ...others.filter((a) => a.category !== app.category)].slice(0, 3);
+    const picks = isWeb
+      ? [...websites.filter((w) => w !== app).map(webCard), ...apps.filter((a) => a.featured && !a.figmaUrl).map(appCard)].slice(0, 3)
+      : [...others.filter((a) => a.category === app.category), ...others.filter((a) => a.category !== app.category)].slice(0, 3).map(appCard);
     return `
       <section class="section" aria-labelledby="related-title">
         <div class="container">
@@ -275,9 +468,9 @@
               <p class="eyebrow">Related</p>
               <h2 class="h2" id="related-title">More from AppsZone</h2>
             </div>
-            <a class="link-arrow" href="index.html#apps">View all apps ${glyph("arrow")}</a>
+            <a class="link-arrow" href="index.html#more">View all products ${glyph("arrow")}</a>
           </div>
-          <div class="app-grid stagger">${picks.map(appCard).join("")}</div>
+          <div class="app-grid stagger">${picks.join("")}</div>
         </div>
       </section>`;
   }
@@ -363,7 +556,13 @@
   }
 
   /* ---------- Render ---------- */
-  document.title = `${app.name} — Free Android app | AppsZone`;
+  document.title = `${app.name} — ${isWeb ? "Product and case study" : "Free Android app"} | AppsZone`;
+  if (isWeb) {
+    $$(".nav-links a").forEach((a) => {
+      if (/websites/i.test(a.textContent)) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+  }
   $('meta[name="description"]')?.setAttribute("content", app.shortDescription);
 
   main.style.setProperty("--brand", app.icon.color);
@@ -372,8 +571,10 @@
     hero() + gallery() + whatItDoes() + howItWorks() + productInfo() + behindTheProduct() + faq() + related() +
     '<p class="sr-only" aria-live="polite" data-dl-status></p>';
 
-  setupSticky();
-  setupDownload();
+  if (!isWeb) {
+    setupSticky();
+    setupDownload();
+  }
   setupCarouselDots($("[data-gallery]"), $("[data-gallery-dots]"), app.screenshots.map((s) => s.caption));
   setupReveal();
 
